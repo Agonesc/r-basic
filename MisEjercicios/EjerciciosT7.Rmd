@@ -52,6 +52,15 @@ sort(rev(x))
 rev(sort(x))
 sort(x, decreasing = TRUE)
 
+### 9- ¿Cómo definirías una matriz constante? Es decir, ¿cómo definirías una matriz A tal que para todo i, de 1 a n; todo j de 1 a m; a sub ij = k siendo k un número real? Como R no admite incógnitas, prueba para el caso específico n=3, m=5, k=0.
+
+matrix(0, nrow=3, ncol=5)
+
+### 10- Con el vector vec = (1,2,3,4,5,6,7,8,9,10,11,12) crea la matriz
+
+vec = c(1,2,3,4,5,6,7,8,9,10,11,12)
+matrix(data = vec, nrow = 3)
+
 
 
 
