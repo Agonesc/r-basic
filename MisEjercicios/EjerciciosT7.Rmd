@@ -1,0 +1,57 @@
+---
+title: "Ejercicios7"
+author: "Ángel González"
+date: "18/1/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Mis Ejercicios Tema 7
+
+### 1- Repite tu año de nacimiento 10 veces.
+
+x <- rep(1992, 10)
+
+### 2- Crea el vector que tenga como entradas 16, 0, 1, 20, 1, 7, 88, 5, 1, 9, llámalo vec y modifica la cuarta entrada con la función fix()
+
+vec <- scan()
+fix(vec)
+
+### 3- Imprimid los números del 1 al 20
+
+seq(1, 20, by = 1)
+1:20
+
+### 4- Imprimid los 20 primeros números pares
+
+seq(2, length = 20, by = 2)
+
+### 5- Imprimid 30 números equidistantes entre 17 y 98, mostrando sólo 4 cifras significativas
+
+round(seq(17, 98, length = 30), 4)
+
+### 6- Combinad las dos funciones anteriores, sort y rev para crear una función que dado un vector x os lo devuelva ordenado en orden decreciente
+
+x <- c(1, 7, 5, 2, 4, 6, 3)
+rev(sort(x))
+
+### 7- Razonad si aplicar primero sort y luego rev a un vector x daría en general el mismo resultado que aplicar primero rev y luego sort
+
+No funcionaría igual dado que si se aplica primero sort, se ordena el vector de manera creciente, y luego rev le daría la vuelta, lo que daría el resultado del anterior ejercicio. Sin embargo, si se hace primero rev, se daría la vuelta al vector, y al usar sort, lo ordenaría igualmente de manera creciente, perdiendo esa inversión.
+
+rev(sort(x))
+
+sort(rev(x))
+
+### 8- Investigad la documentación de la función sort(recordad que podéis usar la sintaxis ?sort en la consola) para leer si cambiando algún argumento de la misma podéis obtener el mismo resultado que habéis programado en el primer ejercicio
+
+rev(sort(x))
+sort(x, decreasing = TRUE)
+
+
+
+
