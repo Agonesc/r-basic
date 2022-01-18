@@ -70,3 +70,12 @@ library(Biodem)
 Biodem::mtx.exp(A, 2)
 library(expm)
 expm::`%^%`(B, 3)
+
+### 12- Comprobad, con los datos dele jemplo anterior, que si P es la matriz de vectores propios de M en columna y D la matriz diagonal cuyas entradas son los valores propios de M, entonces se cumple la siguiente igualdad llamada descomposición canónica: M = P * D * P^(-1)
+
+M = rbind(c(2,6,-8), c(0,6,-3), c(0, 2, 1))
+P = eigen(M)$vectors
+D = diag(c(eigen(M)$values))
+
+Solucion = P%*%D%*%solve(P)
+
