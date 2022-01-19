@@ -1,0 +1,116 @@
+---
+title: "Tarea LaTeX y RMarkdown"
+author: "Ángel González"
+date: "19/1/2022"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Pregunta 1
+
+Realiza los siguientes productos de matrices siguiente en R:
+
+$$A\cdot B$$
+$$B\cdot A$$
+$$(A\cdot B)^t$$
+$$B^t\cdot A$$
+$$(A \cdot B)^{-1}$$
+$$A^{-1}\cdot B^t$$
+Donde:
+$$A = \begin{pmatrix} 1 & 2 & 3 & 4 \\ 4 & 3 & 2 & 1 \\ 0 & 1 & 0 & 2 \\ 3 & 0 & 4 & 0 \end{pmatrix}$$
+$$B = \begin{pmatrix} 4 & 3 & 2 & 1 \\ 3 & 0 & 4 & 0 \\ 1 & 2 & 3 & 4 \\ 0 & 1 & 0 & 2 \end{pmatrix}$$
+Redacta todos tus resultados y utiliza LaTeX cuando pertoque. 
+
+
+```{r}
+A = rbind(c(1,2,3,4), c(4,3,2,1), c(0,1,0,2), c(3,0,4,0))
+B = rbind(c(4,3,2,1),  c(3,0,4,0), c(1,2,3,4), c(0,1,0,2))
+write_matrix = function(x) {
+  begin = "\\begin{pmatrix}"
+  end = "\\end{pmatrix}"
+  X = apply(x, 1, function(x) { paste(paste(x, collapse = "&"),"\\\\")})
+  paste(c(begin, X, end), collapse = "")
+}
+R1 = A%*%B
+R2 = B%*%A
+R3 = t(A%*%B)
+R4 = t(B)%*%A
+R5 = solve(A%*%B)
+R6 = solve(A)%*%t(B)
+
+```
+$$A\cdot B = `r write_matrix(R1)`$$ 
+
+$$B\cdot A = `r write_matrix(R2)`$$
+$$(A\cdot B)^t = `r write_matrix(R3)`$$
+$$B^t\cdot A = `r write_matrix(R4)`$$
+$$(A \cdot B)^{-1} = `r write_matrix(R5)`$$
+$$A^{-1}\cdot B^t = `r write_matrix(R6)`$$
+
+### Pregunta 2
+
+Considera en un vector los números de tu DNI (puedes inventártelos) y llámalo dni. Por ejemplo, si tu DNI
+es 54201567K, tu vector será
+$$dni = (5,4,2,0,1,5,6,7)$$
+Define el vector en `R`. Calcula con `R` el vector dni al cuadrado, la raíz cuadrada del vector `dni` y, por último,
+la suma de todas las cifras del vector `dni`.
+Redacta todos tus resultados y utiliza LaTeX cuando pertoque.
+
+```{r}
+dni = c(5,4,2,0,1,5,6,7)
+S1 = dni^2
+S1
+S2 = sqrt(dni)
+S2
+S3 = cumsum(dni)
+S3
+```
+$$ dni^2 = (`r S1`) $$
+$$ \sqrt dni = (`r S2`) $$
+$$ cumsum(dni) = (`r S3`) $$
+
+### Pregunta 3
+
+Considera el vector de las letras de tu nombre y apellido. Llámalo `name`. Por ejemplo,
+
+$$name = (M, A, R, I, A, S, A, N, T, O, S)$$
+Define dicho vector en `R` . Calcula el subvector que solo contenga tu nombre. Calcula también el subvector
+que contenga solo tu apellido. Ordénalo alfabéticamente. Crea una matriz con este vector.
+Redacta todos tus resultados y utiliza LaTeX cuando pertoque.
+
+```{r}
+name = c("M", "A", "R", "I", "A", "S", "A", "N", "T", "O", "S")
+O1 = name[seq(1, length(name)-6, by = 1)]
+O1
+O2 = name[seq(6, length(name), by = 1)]
+O2
+O3 = sort(name)
+O3
+Mname = matrix(O3, nrow = 3)
+Mname
+```
+$$ name = (`r O1`) $$
+$$ lastName = (`r O2`) $$
+$$ ordered = (`r O3`) $$
+$$ M = `r write_matrix(Mname)` $$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
