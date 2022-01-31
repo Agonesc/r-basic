@@ -1,0 +1,101 @@
+---
+title: "Introducción a la Representación Gráfica"
+author: "Ángel González"
+date: "31/1/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Pregunta 1
+Con una sola instrucción, dibuja el gráfico de la función y = x^2 − 3x + 30 entre −15 y 15. De título,
+pon “Una parábola”. De etiquetas, en el eje X pon, en formato matemático, “x”; y en el eje Y , introduce
+y = x^2 − 3x + 30, también en formato matemático. Tienes que utilizar la función curve().
+
+```{r}
+curve(x^2 - 3*x + 30, 
+      xlim = c(-15, 15), 
+      main = "Una parábola", 
+      xlab = expression(x), 
+      ylab = expression(y == x^2 - 3*x + 30)
+      )
+```
+
+## Pregunta 2
+Considerando lo que has obtenido en el ejercicio anterior y siendo y = f(x) = x^2 − 3x + 30 e I = [−15, 15],
+si en vez de utilizar la función curve(), utilizamos la función plot(), ¿es correcta la sentencia plot(f(I))
+para representar la curva f en el intervalo I? En otras palabras, ¿dan ambas instrucciones la misma gráfica?
+Obviamente, en la instrucción plot(f(I)) se han omitido el resto de parámetros requeridos en el ejercicio
+anterior porque no influyen para nada en la curva. Tanto si la respuesta es afirmativa como negativa, crea la
+función f en R y argumenta tu respuesta, considerando todos los parámetros requeridos (título y etiquetas
+de ambos ejes).
+
+```{r}
+f = function(x){x^2 - 3*x + 30}
+plot(f(-15:15),
+      main = "Una parábola", 
+      xlab = expression(x), 
+      ylab = expression(y == x^2 - 3*x + 30)
+      )
+```
+
+Lo que ocurre en este caso es que el plot lo está haciendo de manera que `plot(1:n, x)` tomando en el primer caso la longitud del vector y empezando en 1. En este caso la longitud de (-15:15) es 30, por lo que me va a pintar un gráfico del 0 al 30. Por ejemplo, en el primer caso va a hacer `-15^2 - 3*(-15) + 30 = 225 - (-45) + 30 = 300`, es decir, me va a pintar un punto en el `x=0`, `y=300`. El siguiente será en el `x=1`, `y= -14^2 -3*(-14) + 30`, y así sucesivamente.
+
+## Pregunta 3
+Dibuja un gráfico semilogarítmico de la función y = 5·2^x entre −1 y 25. Utiliza la función curve(). Muestra
+solo la etiqueta del eje Y , que ponga “y = 5·2^x” en formato matemático.
+
+```{r}
+g = function(x){5*2^x}
+curve(g,
+      log = "y",
+      xlim = c(-1, 25), 
+      ylab = expression(y == 5%.%2^x)
+      )
+```
+
+## Pregunta 4
+Dibuja el gráfico de la función y1 = 3x, entre −10 y 20, utilizando la función curve(). Añade la curva
+y2 = −3x. El gráfico no debe mostrar ninguna etiqueta. La primera curva debe ser de color azul y la
+segunda, de color verde. Ponle de título “2 rectas” y de subtítulo “Dos rectas con pendiente opuesto”. Añade
+al gráfico un recuadro (con la esquina superior izquierda en el punto (13,10)) que indique que la función 3x
+es la azul y la −3x, la verde.
+
+```{r}
+f1 = function(x){3*x}
+f2 = function(x){-3*x}
+
+curve(f1,
+      main = "2 rectas",
+      sub = "Dos rectas con pendiente opuesto",
+      xlim = c(-10, 20),
+      col="blue"
+      )
+curve(f2,
+      col="green",
+      add = TRUE
+      )
+abline(h = 0, col = "red", lwd = 5, lty = "dashed")
+abline(7, 2, col = "cyan", lwd = 2, lty = "dashed")
+legend(13,10, 
+       legend = c(expression(3*x), expression(-3*x), expression (y == 0), expression(y == 2*x + 7)),
+       col = c("blue", "green", "red", "cyan"),
+       lty = c(1, 1, 2, 2),
+       lwd = c(1, 1, 5, 2)
+       )
+```
+
+## Pregunta 5
+Da la instrucción que añada a un gráfico anterior la recta horizontal y = 0 de color rojo con un grosor de 5
+puntos.
+
+## Pregunta 6
+Da la instrucción que añada a un gráfico anterior la recta y = 2x+ 7 de color azul con un grosor de 2 puntos.
+
+### NOTA: Las preguntas 5 y 6 se tienen que añadir después de un gráfico, no puede ser en otro bloque de código.
+
+
+
+
