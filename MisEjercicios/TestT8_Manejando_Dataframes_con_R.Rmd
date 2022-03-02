@@ -1,0 +1,106 @@
+---
+title: "Test T8 Manejando Dataframes con R"
+author: "Ángel González"
+date: "2/3/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Pregunta 1
+¿Cuántos deportistas aparecen en el data frame?
+
+```{r}
+df = read.csv("http://winterolympicsmedals.com/medals.csv")
+str(df)
+nrow(df)
+```
+
+Con str(df) nos muestra el número de filas (en este caso deportistas) del data frame (2311)
+'data.frame':    2311 obs. of  8 variables:
+Aunque también podemos saberlo con nrow(df) (que es la que usaré más adelante aunque proporcione menos información)
+
+## Pregunta 2
+¿Cuántos deportistas han ganado medallas de oro? ¿Cuántos han ganado medallas de plata? ¿Y cuántos de
+bronce?
+
+```{r}
+nrow(df[df$Medal == "Gold", ])
+nrow(df[df$Medal == "Silver", ])
+nrow(df[df$Medal == "Bronze", ])
+```
+Medallas de Oro -> 774
+Medallas de Plata -> 773
+Medallas de Bronce - 764
+
+## Pregunta 3
+¿En cuántos lugares se han hecho olimpiadas de invierno?
+
+```{r}
+unique(df$City)
+```
+
+## Pregunta 4
+¿Cuántos hombres y cuántas mujeres hay?
+
+```{r}
+nrow(df[df$Event.gender == "M", ])
+nrow(df[df$Event.gender == "W", ])
+nrow(df[df$Event.gender == "X", ])
+```
+Hombres -> 1386
+Mujeres -> 802
+Género no definido -> 123
+
+## Pregunta 5
+¿En qué año participaron más deportistas?
+
+```{r}
+head(sort(table(df$Year), decreasing = TRUE), 1)
+```
+El año en el que más deportistas participaron fue 2006 con 252 deportistas.
+
+## Pregunta 6
+El campo NOC indica el país del ganador de la medalla. ¿Qué país puede presumir de haber ganado más
+medallas de oro en los juegos de invierno entre 1960 y 1996?
+
+```{r}
+df2 = df[df$Year>=1960 & df$Year<=1996, ]
+head(sort(table(df2$NOC), decreasing = TRUE), 1)
+```
+El país que más medallas de oro ha ganado entre 1960 y 1996 es Noruega (NOR) con 280 medallas de oro.
+
+## Respuesta a pregunta 6 por el profesor
+### Filtramos primero para únicamente tener las observaciones entre 1960 y 1996
+
+```{r}
+medals1960_1996 = df[df$Year >= 1960 & df$Year <= 1996 & df$Medal == "Gold",]
+```
+
+### Vemos todos los paises ganadores entre 1960 y 1996
+
+```{r}
+countries = levels(medals1960_1996$NOC)
+```
+
+### Creamos función que devuelve total de victorias de un país concreto
+
+```{r}
+victoriesPerCountry = function(country){ sum(medals1960_1996$NOC == country) }
+```
+
+### Aplicamos la función al vector de países countries
+
+```{r}
+victories = sapply(countries, victoriesPerCountry)
+```
+
+# Buscamos qué país tiene el máximo de victorias
+
+```{r}
+which(victories == max(victories))
+```
+
+
