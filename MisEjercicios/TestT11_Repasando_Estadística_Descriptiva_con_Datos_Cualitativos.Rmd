@@ -1,0 +1,67 @@
+---
+title: "TestT11_Repasando_Estadística_Descriptiva_con_Datos_Cualitativos"
+author: "Ángel González"
+date: "28/2/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Pregunta 1
+Da la instrucción que defina la tabla de frecuencias absolutas de un vector llamado alumnos.
+
+```{r}
+alumnos = c("Ángel", "Andrea", "Carlos", "Noelia", "Carlos", "María")
+table(alumnos)
+```
+## Pregunta 2
+Con una sola instrucción, define la tabla de frecuencias relativas de un vector llamado edades
+
+```{r}
+edades = c(30, 27, 28, 30, 27, 27)
+prop.table(edades)
+```
+## Pregunta 3
+Con una sola instrucción, define la tabla bidimensional conjunta de frecuencias absolutas de dos vectores
+llamados altura y peso, de forma que las filas correspondan a altura y las columnas a peso.
+
+```{r}
+altura = c(165, 158, 172, 181, 193, 165)
+peso = c(83, 52, 68, 73, 83, 52)
+
+table(altura,peso)
+```
+
+## Pregunta 4
+Con una sola instrucción, define la tabla bidimensional conjunta de frecuencias relativas calculadas dentro del
+total, de dos vectores llamados edad y altura, de forma que las filas correspondan a altura y las columnas
+a edad.
+
+```{r}
+prop.table(table(altura,edades))
+```
+## Pregunta 5
+Con una sola instrucción, dibuja un diagrama de barras básico de un vector llamado edad
+
+```{r}
+barplot(edades, main = "edad")
+```
+
+## Pregunta 6
+Con una sola instrucción, dibuja un diagrama circular básico de un vector llamado alumnos.
+
+```{r}
+pie(table(alumnos), main = "alumnos")
+```
+
+## Pregunta 7
+La tabla DNase es uno de los data frames que tiene predefinidos R. Da la instrucción que dibuje un diagrama
+de barras básico de la variable density de este mismo data frame.
+
+```{r}
+str(DNase)
+barplot(DNase$density, main = "density")
+```
+
