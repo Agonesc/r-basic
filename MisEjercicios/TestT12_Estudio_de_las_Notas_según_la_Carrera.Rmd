@@ -1,0 +1,96 @@
+---
+title: "TestT12_Estudio_de_las_Notas_según_la_Carrera"
+author: "Ángel González"
+date: "8/3/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Pregunta 1
+Calcula la media, la mediana y la moda redondeada a dos cifras decimales de las notas numéricas de los
+exámenes tanto de forma conjunta como por estudio universitario. ¿En qué grupo observamos la nota más
+alta? ¿Qué grupo está por encima de la media de estudiantes?
+
+
+Cálculo de datos de forma conjunta
+```{r}
+data = read.table("../data/grades.txt")
+
+round(mean(data[, 2]), 2)
+round(median(data[, 2]), 2)
+notas = subset(round(data[, 2], 2), data[, 2]>0)
+as.numeric(names(which(table(notas)==max(table(notas)))))
+```
+Cálculo de datos por estudio universitario
+```{r}
+round(by(data[, 2], data$estudio, FUN = mean), 2)
+round(by(data[, 2], data$estudio, FUN = median), 2)
+
+calcular_moda <- function(x) {
+  tabla <- table(x)
+  moda <- names(tabla)[which.max(tabla)]
+  return(moda)
+}
+
+datosFiltrados <- subset(data, data[, 2]>0)
+datosFiltrados$nota <- round(datosFiltrados$nota, 2)
+
+by(datosFiltrados[, 2], datosFiltrados[, 1], calcular_moda)
+```
+Podemos ver que en Mates hay una mayor media, mayor mediana e incluso mayor moda.
+En cuanto a los grupos que están por encima de la media, siendo esta para todos los grupos 3.87, los grupos que están por encima de esta son Informática y Mates.
+
+## Pregunta 2
+¿En qué grupo observamos más variación de notas? Justifica tu respuesta.
+
+```{r}
+round(by(data[, 2], data$estudio, FUN = sd), 2)
+
+```
+Hay más variación de notas en Mates, siendo por contrapartida, Informática, el grupo que menos variabilidad tiene y por tanto, tiene valores más concentrados en torno a la media.
+
+## Pregunta 3
+¿Hay mucha diferencia entre el grupo que has respondido en el ejercicio 1 y en el ejercicio 2? Intenta dar
+una explicación objetiva del suceso.
+
+Hay más variabilidad en las notas de Mates. Esto significa que, aunque la media sea más alta, el conjunto es más heterogéneo ya que los valores de las notas están más dispersos y no se concentran en torno a la media como puede haber en otro estudio con una desviación típica menor (como en el caso de Informática, que sería un conjunto más homogéneo).
+
+## Pregunta 4
+Dibuja en un único gráfico los cuatro diagramas de caja, uno para cada grupo. Añade también la nota media,
+pon nombre, título y color al gráfico para documentarlo correctamente.
+
+```{r}
+medias <- aggregate(nota~estudio, data = data, mean)
+
+boxplot(nota~estudio, data = data, col = "lightblue",
+        xlab = "Estudios", ylab = "Notas", main = "Notas por estudios universitarios")
+
+points(medias, col="red", pch=20)
+```
+## Pregunta 5
+¿Observas algunos valores atípicos en el boxplot anterior? ¿A qué grupo pertence?
+
+Hay Outliers en todos los grupos menos en Mates
+
+## Pregunta 6
+Indica a partir del boxplot anterior en qué grupo observamos más variedad de notas.
+
+Se puede ver que hay una mayor variedad de nota, tal y como indico en la pregunta 3, en el grupo de mates. Se puede ver ya que el boxplot es mayor que el resto y tienen más valores alejados de la media que el resto.
+
+## Pregunta 7
+En base a todo lo anterior, ¿puedes afirmar de forma estadística que el examen de carrera ha ido mejor en
+algún estudio que en los demás?
+
+Esta pregunta no se como afrontarla ya que hay dos opciones:
+- El examen que ha salido mejor depende del número de aprobados
+- El examen que ha salido mejor es el que tiene notas más homogéneas
+
+El primer caso no lo voy a tratar puesto que hay notas desde 0 hasta el valor máximo max(data$nota) que es superior a 10, por lo que no se que rango hay de aprobados.
+
+En el segundo caso, si las notas son más homogéneas, significa que hay más notas cercanas a la media. Esto indica que la mayoría de los alumnos (sea cual sea la nota de aprobado) han sacado notas parecidas entre ellos y que, si el examen fuese fácil o difícil, se puede reflejar en estas notas. En el caso que hubiese notas muy dispares, no podíamos sacar esa conclusión.
+
+Si las notas fuesen de 0 a 10, a mi parecer, el mejor examen es el de matemáticas puesto que es el que mayor número de aprobados tiene (mayor que 5), ya que estos datos no se basarían en la variablidad como en el ejemplo de los insecticidas.
+
