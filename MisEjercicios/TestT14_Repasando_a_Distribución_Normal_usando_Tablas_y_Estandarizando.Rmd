@@ -1,0 +1,200 @@
+---
+title: "TestT14_Repasando_a_Distribución_Normal_usando_Tablas_y_Estandarizando"
+author: "Ángel González"
+date: "28/3/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Pregunta 1
+La cantidad de tiempo (en horas) utilizada para completar un producto determinado sigue una distribución
+N (10, 2). Calcula la probabilidad de que se tarde:
+a) Menos de 6 horas
+b) Entre 7 y 13 horas
+Estandariza y luego calcula la probabilidad requerida mediante las tablas y comprueba tus resultados en R
+(o Python).
+
+### Respuesta 1
+
+Teniendo en cuenta que X ~ N(10, 2).
+
+a) Para calcular la probabilidad de que se tarde menos de 6 horas, estandarizamos la variable aleatoria X:
+
+  Z = (6 - 10) / 2 = -2
+  
+Por lo tanto, P(X < 6) = P(Z < -2). 
+
+En las tablas vemos que P(Z < -2) = 0.0228.
+
+```{r}
+round(pnorm(6, 10, 2), 4)
+```
+
+
+b) Para calcular la probabilidad de que se tarde entre 7 y 13 horas, primero estandarizamos los límites inferior y superior de este intervalo:
+
+P(7 < X < 13) = P(X <= 13) - p(X <= 7)
+
+P(X <= 13) = (13-10)/2 = 1.5 
+P(X <= 7) = (7-10)/2 = -1.5
+
+Entonces:
+
+P(Z <= 1.5) - P(Z <= -1.5) = 0.9332 - 0.0668 = 0.8664
+
+En R
+
+```{r}
+round(pnorm(13, 10, 2) - pnorm(7, 10, 2), 4)
+```
+
+
+## Pregunta 2
+El valor (en millones) de las ventas anuales realizadas en la Discográfica “Hasta quedarnos sin tímpanos”
+sigue un modelo normal de media igual a 200 y desviación típica igual a 40.
+a) Calcula la probabilidad de que el número de ventas sea exactamente igual a 200 (millones)
+b) Calcula la probabilidad de que el número de ventas sea mayor que 250 (millones)
+c) Calcula la probabilidad de que el número de ventas sea menor o igual que 100 (millones)
+Estandariza y luego calcula la probabilidad requerida mediante las tablas y comprueba tus resultados en R
+(o Python).
+
+### Respuesta 2
+
+Teniendo en cuenta que X ~ N(200, 40).
+
+a) La probabilidad de que el número de ventas sea exactamente igual a 200 millones es igual a cero, ya que la probabilidad de que una variable aleatoria continua tome un valor exacto es siempre cero.
+
+b) Para calcular la probabilidad de que el número de ventas sea mayor que 250 millones, primero debemos estandarizar la variable aleatoria X de la siguiente manera:
+
+P(X > 250) = 1 - P(X <= 250) = 1 - P((250-200)/40) = 1 - P(Z <= 1.25)
+
+Por tanto:
+
+1 - P(Z <= 1.25) = 1 - 0.8944 = 0.1056
+
+En R:
+```{r}
+round(1-pnorm(250, 200, 40), 4)
+```
+
+c) Para calcular la probabilidad de que el número de ventas sea menor o igual que 100 millones, debemos estandarizar la variable aleatoria X de la siguiente manera:
+
+P(X <= 100) = P((100-200)/40) = P(Z <= -2.5)
+
+Por tanto:
+
+P(Z <= -2.5) = 0.0062
+
+En R:
+```{r}
+round(pnorm(100, 200, 40), 4)
+```
+
+## Pregunta 3
+Las puntuaciones obtenidas en un examen tipo test realizado a un grupo de opositores se distribuyen normalmente con media 50 y desviación típica 6.5. Calcula:
+a) Probabilidad de tener una puntuación menor a 23 puntos.
+b) Probabilidad de tener entre 27.3 y 43.1 puntos
+c) Probabilidad de tener más de 62 puntos
+d) Probabilidad de tener 3.2 puntos o menos
+e) Halla el número de puntos que se deben obtener para que la probabilidad de sacar menos de esa
+cantidad de puntos sea de 0.045
+f) Repite el apartado anterior, pero esta vez para obtener una probabilidad de 0.45
+Estandariza y luego calcula la probabilidad requerida mediante las tablas y comprueba tus resultados en R
+(o Python).
+
+### Respuesta 3
+
+Teniendo en cuenta que X ~ N(50, 6.5).
+
+a) Probabilidad de tener una puntuación menor a 23 puntos:
+
+P(X <= 23) P((23-50)/6.5) = P(Z <= -4.15)
+
+Por tanto:
+
+P(Z <= -4.15) = 0
+
+En R:
+```{r}
+round(pnorm(23, 50, 6.5), 4)
+```
+b) Probabilidad de tener entre 27.3 y 43.1 puntos:
+
+P(X <= 27.3) P((27.3-50)/6.5) = P(Z <= -3.49)
+P(X <= 43.1) P((43.1-50)/6.5) = P(Z <= -1.06)
+
+Por tanto:
+P(27.3 <= X <= 43.1) = P(X <= 43.1) - P(X <= 27.3)
+
+P(Z <= -3.49) = 0.0002
+P(Z <= -1.06) = 0.1446
+
+0.1446 - 0.0002 = 0.1444
+
+En R:
+```{r}
+round(pnorm(43.1, 50, 6.5) - pnorm(27.3, 50, 6.5), 5)
+```
+c) Probabilidad de tener más de 62 puntos:
+
+P(X > 62) = 1 - P(X <= 62)= 1 - P((62-50)/6.5) = P(Z <= 1.85)
+
+Por tanto:
+
+P(Z <= 1.85) = 0.9678 
+
+En estos ejercicios hay diferencias ya que hay problemas de redondeo. Por ejemplo (62-50)/6.5 = 1.846154, pero las tablas solo tienen 2 decimales.
+
+En R:
+```{r}
+round(pnorm(62, 50, 6.5), 4)
+```
+d) Probabilidad de tener 3.2 puntos o menos:
+
+P(X <= 3.2) P((3.2-50)/6.5) = P(Z <= -7.2)
+
+Por tanto:
+
+P(Z <= -7.2) = 0
+
+En R:
+```{r}
+round(pnorm(3.2, 50, 6.5), 4)
+```
+
+e) Halla el número de puntos que se deben obtener para que la probabilidad de sacar menos de esa
+cantidad de puntos sea de 0.045
+
+Si miramos las tablas el valor más cercano a 0.045 es 0.0455 que pertenece a P(Z <= -1.69)
+
+Buscamos P(Z <= (X-mu)/sigma)) = -1.69. Despejando:
+x = -1.69 * sigma + mu = -1.69 * 6.5 + 50 = 39.015
+
+Por tanto:
+
+Se necesitan aproximadamente 39 puntos para que la probabilidad de sacar menos de esa cantidad de puntos sea de 0.045
+
+En R:
+```{r}
+round(qnorm(0.045, 50, 6.5), 2)
+```
+
+f) Repite el apartado anterior, pero esta vez para obtener una probabilidad de 0.45
+Estandariza y luego calcula la probabilidad requerida mediante las tablas y comprueba tus resultados en R
+
+Si miramos las tablas el valor más cercano a 0.45 es 0.0455 que pertenece a P(Z <= -0.12)
+
+Buscamos P(Z <= (X-mu)/sigma)) = -1.69. Despejando:
+x = -0.12 * sigma + mu = -0.12 * 6.5 + 50 = 49.22
+
+Por tanto:
+
+Se necesitan aproximadamente 49 puntos para que la probabilidad de sacar menos de esa cantidad de puntos sea de 0.45
+
+En R:
+```{r}
+round(qnorm(0.45, 50, 6.5), 2)
+```
