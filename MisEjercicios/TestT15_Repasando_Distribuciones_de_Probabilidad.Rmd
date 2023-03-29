@@ -1,0 +1,182 @@
+---
+title: "TestT15_Repasando_Distribuciones_de_Probabilidad"
+author: "Ángel González"
+date: "29/3/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Pregunta 1
+
+En una universidad, se sabe que el 25% de los alumnos realizan algún tipo de deporte. Se ha obtenido una
+muestra de 30 alumnos.
+a) Si llamamos X a la variable aleatoria que cuenta el número de alumnos que realizan algún tipo de
+deporte, ¿qué tipo de distribución sigue X?
+b) ¿Qué esperanza tiene X?
+c) ¿Y varianza?
+d) Calcula con R (o Python) la probabilidad de que más de 25 alumnos practiquen algún deporte.
+e) Calcula con R (o Python) la probabilidad de que exactamente 15 alumnos practiquen algún deporte.
+f) Calcula con R (o Python) la probabilidad de que de 10 alumnos o menos practiquen algún deporte.
+
+### Respuesta 1
+
+a) Es binomial ya que los únicos valores posibles son si el alumno ha hecho deporte o no. Por otro, lado el número de ensayos es n=30 con probabilidad p=0.25
+
+b) La esperanza para una binomial es E(X) = n * p = 30 * 0.25 = 7.5
+
+c) La varianza para una binomial es Var(X) = n * p * (1-p) = 30 * 0.25 * 0.75 = 5.625
+
+d) En R:
+```{r}
+n = 30
+p = 0.6
+
+sum(dbinom(26:30, n, p))
+```
+
+e) En R:
+```{r}
+dbinom(15, n, p)
+```
+
+f) En R:
+```{r}
+sum(dbinom(0:10, n, p))
+```
+## Pregunta 2
+
+El número medio de accidentes de coche en la ciudad de Mahón en 2 meses es de 2 accidentes.
+a) ¿Qué distribución sigue la v.a. que cuenta el número de accidentes en 2 meses?
+b) Calcula la esperanza
+c) Calcula con R (o Python) la probabilidad de que no ocurra ningún accidente en 2 meses.
+
+### Respuesta 2
+
+a) Es una distribución de Poisson ya que es un número de eventos en intervalo de tiempo con tasa media conocida.
+
+b) E(X) = lambda = 2
+
+c) En R:
+```{r}
+lambda = 2
+x = 0 # para que no ocurra ningun accidente
+dpois(x, lambda)
+```
+## Pregunta 3
+
+El 40% de un pueblo a las afueras de la ciudad de Pensilvania ve un concurso que dan por la tele. El concurso
+llama por teléfono a 15 personas del pueblo elegidas al azar. ¿De qué distribución se trata?
+
+### Respuesta 3
+
+Se trata de una distribución Binomial, siendo el n=15 y p=0.40
+
+## Pregunta 4
+En un bol muy grande tenemos, en total, 70 fresas, de entre las cuales 10 están podridas. Tomando un
+puñado de 20 fresas al azar y sin reemplazar ninguna de ellas, ¿qué distribución sigue la v.a. que cuenta el
+número de fresas podridas?
+Da también la esperanza y la varianza de esta variable aleatoria.
+
+### Respuesta 4
+Es una distribución Hipergeométrica porque se extrae un número fijo de elementos (sin retornarlos). En este caso 20 fresas para 70 totales y ver la probabilidad de que se saquen 10 podridas.
+
+E(X) = n * (K/N) = 20 * (10/70) = 2.857143
+
+Var(X) = n * (K/N) * ((N-K)/N) * ((N-n)/(N-1)) = 20 * (10/70) * ((70-10)/70) * ((70-20)/(70-1)) = 1.774623
+
+
+## Pregunta 5
+Un test de matemáticas consta de 200 preguntas de verdadero o falso. Para una persona que respondiese al
+azar, ¿qué distribución seguiría la v.a. que cuenta el número de preguntas acertadas?
+Da también la esperanza y la varianza de esta variable aleatoria.
+
+### Respuesta 5
+Distribución binomial con respuesta de verdadero o falso, con n = 200 y p = 0.5.
+
+E(X) = n * p = 200 * 0.5 = 100
+Var(X) = n * p * (1 - p) = 200 * 0.5 * (1 - 0.5) = 50
+
+## Pregunta 6
+Un test de matemáticas consta de 200 preguntas. Cada pregunta consta de 4 posibles respuestas con solo
+una correcta. Para una persona que respondiese al azar, ¿qué distribución seguiría la v.a. que cuenta el
+número de preguntas acertadas?
+Da también la esperanza y la varianza de esta variable aleatoria.
+
+### Respuesta 6
+Con 4 posibles respuestas y solo una correcta, si se responde al azar, sigue una distribución Binomial, ya que se trata de un experimento en el que se realizan varias pruebas idénticas e independientes (cada pregunta del test), cada una con cuatro posibles resultados equiprobables (acertar, fallar tres veces). En este caso n = 200 y p = 0.25.
+
+E(X) = n * p = 200 * 0.25 = 50
+Var(X) = n * p * (1 - p) = 200 * 0.25 * (1 - 0.25) = 37.5
+
+## Pregunta 7
+Un test de matemáticas consta de 200 preguntas de verdadero o falso. Para una persona que respondiese al
+azar y por orden, ¿qué distribución seguiría la v.a. que cuenta el número de preguntas respondidas hasta el
+primer acierto?
+Da también la esperanza y la varianza de esta variable aleatoria.
+
+### Respuesta 7
+Hasta el primer acierto indica que es una distribución geométrica. Como sólo hay 2 posibilidades y se responde al azar, p=0.5.
+
+E(X) = 1 / p = 1 / 0.5 = 2
+Var(X) = (1 - p) / p^2 = (1 - 0.5) / (0.5)^2 = 2
+
+## Pregunta 8
+Para evitar ser arrestado al pasar el control de seguridad, un viajero ha colocado 7 pastillas de droga en una
+botella que contiene 14 píldoras de vitaminas, las cuales son muy similares a las otras. Si el policía de turno
+selecciona 4 pastillas aleatoriamente para analizarlas, ¿qué distribución sigue la v.a. que cuenta el número
+de pastillas de droga?
+
+### Respuesta 8
+La v.a. que cuenta el número de pastillas de droga seleccionadas sigue una distribución hipergeométrica con los siguientes parámetros:
+
+N: el tamaño de la población (21 pastillas en total).
+K: el número de elementos de la población que son de interés (7 pastillas de drogas).
+n: el tamaño de la muestra (4 pastillas seleccionadas para análisis).
+
+
+## Pregunta 9
+Un servicio dedicado a la reparación de aires acondicionados recibe de media 27 llamadas diarias. ¿Qué
+distribución sigue la v.a. que cuenta el número de llamadas diarias?
+
+### Respuesta 9
+Es una distribución de Poisson ya que es un número de eventos en intervalo de tiempo con tasa media conocida.
+
+
+## Pregunta 10
+Se lanza 53 veces un dado. ¿Qué distribución sigue la v.a. que cuenta cuántas veces ha salido un número
+impar? ¿Y la v.a. que cuenta el número de veces que ha salido un número par? ¿Y la v.a. que cuenta las
+veces que hemos obtenido exactamente el número 5?
+
+### Respuesta 10
+La variable aleatoria que cuenta el número de veces que ha salido un número impar sigue una distribución binomial con parámetros n = 53 (el número de lanzamientos) y p = 1/2 (la probabilidad de obtener un número impar en un lanzamiento). Esto se debe a que cada lanzamiento es independiente y tiene una probabilidad constante de éxito (obtener un número impar).
+
+La variable aleatoria que cuenta el número de veces que ha salido un número par también sigue una distribución binomial con los mismos parámetros n = 53 y p = 1/2. Esto se debe a que cada lanzamiento es independiente y tiene una probabilidad constante de éxito (obtener un número par).
+
+La variable aleatoria que cuenta las veces que hemos obtenido exactamente el número 5 sigue una distribución binomial con parámetros n = 53 y p = 1/6 (la probabilidad de obtener el número 5 en un lanzamiento). Esto se debe a que cada lanzamiento es independiente y tiene una probabilidad constante de éxito (obtener el número 5).
+
+
+## Pregunta 11
+El precio medio del litro de gasolina durante el próximo año se estima que puede oscilar entre 1.09€ y 2.53€.
+¿De qué distribución de probabilidad se trata?
+
+### Respuesta 11
+Es una distribución uniforme continua. En este caso, cualquier precio dentro del rango 1.09 y 2.53 es igualmente probable
+
+
+## Pregunta 12
+En una tienda del centro comercial, el tiempo medio de cola para poder pagar en caja es de 7 minutos. ¿De
+qué distribución de probabilidad se trata?
+Da la esperanza y varianza.
+
+### Respuesta 12
+La distribución de probabilidad que describe el tiempo de espera en la cola para pagar en una tienda puede ser modelada por una distribución de probabilidad exponencial ya que es adecuada para modelar el tiempo entre eventos independientes que ocurren a una tasa promedio constante. Siendo lambda = 7:
+
+
+E(X) = 1/lambda = 1/7 = 0.1428571
+Var(X) = 1/lambda^2 = 1/7^2 = 0.02040816
+
+
+
